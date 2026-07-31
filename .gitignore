@@ -1,0 +1,6 @@
+# Visual Studio / .NET
+bin/
+obj/
+
+# Fichiers utilisateur
+.vs/

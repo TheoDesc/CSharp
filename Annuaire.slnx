@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Data/Data.csproj" />
+  <Project Path="DataGeneration/DataGeneration.csproj" Id="e2225ad0-5ffd-4142-bdb9-a2948a0be6d4" />
+  <Project Path="DataTest/DataTest.csproj" />
+</Solution>
