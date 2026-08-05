@@ -5,6 +5,7 @@ class Program
 {
     static void Main()
     {
+        DB.NomFichierSQLite = @"C:\Users\theod\source\repos\Annuaire\annuaire_data_test.db";
         DB.CreerBase();
 
         Console.WriteLine("===== TEST SITES =====");

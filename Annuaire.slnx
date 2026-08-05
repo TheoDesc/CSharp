@@ -1,5 +1,9 @@
 <Solution>
   <Project Path="Data/Data.csproj" />
+  <Project Path="DataEF/DataEF.csproj" Id="f7640bb9-261d-427c-a3d6-e7ad6bd75a5f" />
   <Project Path="DataGeneration/DataGeneration.csproj" Id="e2225ad0-5ffd-4142-bdb9-a2948a0be6d4" />
   <Project Path="DataTest/DataTest.csproj" />
+  <Project Path="DataTestEF/DataTestEF.csproj" Id="10f8f458-2996-43a5-a311-ab427cad2874" />
+  <Project Path="PdfTest/PdfTest.csproj" Id="c78cb154-70cf-46c4-b55f-e2e82c1dbb56" />
+  <Project Path="WPF/WPF.csproj" Id="a53fa7ae-d927-4b99-acf7-ee161a98d911" />
 </Solution>
