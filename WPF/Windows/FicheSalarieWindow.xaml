@@ -1,0 +1,51 @@
+﻿<Window x:Class="WPF.Windows.FicheSalarieWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Fiche salarié"
+        Height="450"
+        Width="500">
+
+    <Grid Margin="20">
+
+        <StackPanel>
+
+            <TextBlock Text="FICHE SALARIÉ"
+                       FontSize="25"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
+
+
+            <TextBlock Name="txtNom"
+                       FontSize="16"/>
+
+            <TextBlock Name="txtPrenom"
+                       FontSize="16"/>
+
+            <TextBlock Name="txtTel"
+                       FontSize="16"/>
+
+            <TextBlock Name="txtPortable"
+                       FontSize="16"/>
+
+            <TextBlock Name="txtEmail"
+                       FontSize="16"/>
+
+            <TextBlock Name="txtService"
+                       FontSize="16"/>
+
+            <TextBlock Name="txtSite"
+                       FontSize="16"/>
+
+
+            <Button Content="Générer PDF"
+                    Name="btnPdf"
+                    Width="150"
+                    Height="40"
+                    Margin="0,30,0,0"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>

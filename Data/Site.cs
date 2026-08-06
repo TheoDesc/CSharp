@@ -8,5 +8,10 @@
 
         // Ville du site.
         public string Ville { get; set; }
+
+        public override string ToString()
+        {
+            return " > " + Ville;
+        }
     }
 }

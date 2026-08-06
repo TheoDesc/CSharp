@@ -2,10 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Annuaire Entreprise"
-        Height="600"
-        Width="900">
+        Height="650"
+        Width="1000">
 
-    <Grid Margin="20">
+    <Grid Margin="15">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,37 +14,59 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
         <!-- Titre -->
-        <TextBlock Text="ANNULAIRE ENTREPRISE"
+        <TextBlock Text="ANNUAIRE D'ENTREPRISE"
                    FontSize="28"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Margin="0,0,0,20"/>
 
+        <!-- Zone de recherche -->
+        <StackPanel Grid.Row="1">
 
-        <!-- Recherche -->
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
-                    Margin="0,0,0,20">
+            <WrapPanel Margin="0,0,0,10">
 
-            <TextBlock Text="Nom :"
-                       VerticalAlignment="Center"/>
+                <TextBlock Text="Nom / Prénom :"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
 
-            <TextBox Width="200"
-                     Margin="10,0,20,0"/>
+                <TextBox Name="txtRecherche"
+                         Width="250"/>
 
+            </WrapPanel>
 
-            <Button x:Name="btnRechercher" Content="Rechercher"
-                    Width="120" Click="btnRechercher_Click"/>
+            <WrapPanel Margin="0,0,0,20">
+
+                <TextBlock Text="Site :"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
+
+                <ComboBox Name="cbSite"
+                          Width="180"
+                          Margin="0,0,20,0"/>
+
+                <TextBlock Text="Service :"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
+
+                <ComboBox Name="cbService"
+                          Width="180"
+                          Margin="0,0,20,0"/>
+
+                <Button Name="btnRechercher"
+                        Content="Rechercher"
+                        Width="120"/>
+
+            </WrapPanel>
 
         </StackPanel>
 
-
-        <!-- Tableau salariés -->
-        <DataGrid Grid.Row="2"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True">
+        <!-- Tableau -->
+        <DataGrid Name="dgSalaries"
+          Grid.Row="2"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          MouseDoubleClick="dgSalaries_MouseDoubleClick" SelectionChanged="dgSalaries_SelectionChanged">
 
             <DataGrid.Columns>
 
@@ -53,6 +75,9 @@
 
                 <DataGridTextColumn Header="Prénom"
                                     Binding="{Binding Prenom}"/>
+
+                <DataGridTextColumn Header="Téléphone"
+                                    Binding="{Binding TelPortable}"/>
 
                 <DataGridTextColumn Header="Service"
                                     Binding="{Binding Service}"/>
@@ -64,23 +89,23 @@
 
         </DataGrid>
 
-
         <!-- Boutons -->
         <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0,20,0,0">
 
-            <Button Content="Voir la fiche"
+            <Button Name="btnFiche"
+                    Content="Voir la fiche"
                     Width="130"
                     Margin="5"/>
 
-            <Button Content="Administration"
+            <Button Name="btnAdmin"
+                    Content="Administration"
                     Width="130"
                     Margin="5"/>
 
         </StackPanel>
-
 
     </Grid>
 

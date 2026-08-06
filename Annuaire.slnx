@@ -4,6 +4,7 @@
   <Project Path="DataGeneration/DataGeneration.csproj" Id="e2225ad0-5ffd-4142-bdb9-a2948a0be6d4" />
   <Project Path="DataTest/DataTest.csproj" />
   <Project Path="DataTestEF/DataTestEF.csproj" Id="10f8f458-2996-43a5-a311-ab427cad2874" />
-  <Project Path="PdfTest/PdfTest.csproj" Id="c78cb154-70cf-46c4-b55f-e2e82c1dbb56" />
+  <Project Path="PdfGen/PdfGen.csproj" Id="dfd957b1-f374-4882-ae40-1ded36a634e1" />
+  <Project Path="PdfGenTest/PdfGenTest.csproj" Id="100e629b-e649-46c0-b161-8af7169939c7" />
   <Project Path="WPF/WPF.csproj" Id="a53fa7ae-d927-4b99-acf7-ee161a98d911" />
 </Solution>

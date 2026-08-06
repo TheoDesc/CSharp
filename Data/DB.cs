@@ -416,10 +416,26 @@ namespace Data
                 using (SqliteCommand command = connection.CreateCommand())
                 {
                     command.CommandText = @"
-                        SELECT Id, Nom, Prenom, TelFixe, TelPortable,
-                               Email, ServiceId, SiteId
-                        FROM Salaries
-                    ";
+                SELECT 
+                    Salaries.Id,
+                    Salaries.Nom,
+                    Salaries.Prenom,
+                    Salaries.TelFixe,
+                    Salaries.TelPortable,
+                    Salaries.Email,
+                    Salaries.ServiceId,
+                    Salaries.SiteId,
+                    Services.Nom,
+                    Sites.Ville
+
+                FROM Salaries
+
+                LEFT JOIN Services 
+                    ON Salaries.ServiceId = Services.Id
+
+                LEFT JOIN Sites 
+                    ON Salaries.SiteId = Sites.Id
+            ";
 
                     using (SqliteDataReader reader = command.ExecuteReader())
                     {
@@ -433,8 +449,12 @@ namespace Data
                                 TelFixe = reader.GetString(3),
                                 TelPortable = reader.GetString(4),
                                 Email = reader.GetString(5),
+
                                 ServiceId = reader.GetInt32(6),
-                                SiteId = reader.GetInt32(7)
+                                SiteId = reader.GetInt32(7),
+
+                                Service = reader.IsDBNull(8) ? "" : reader.GetString(8),
+                                Site = reader.IsDBNull(9) ? "" : reader.GetString(9)
                             });
                         }
                     }
