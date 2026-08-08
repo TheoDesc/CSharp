@@ -1,0 +1,53 @@
+﻿<Window x:Class="WPF.Windows.AdministrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Administration"
+        Height="300"
+        Width="400"
+        WindowStartupLocation="CenterScreen">
+
+
+    <Grid Margin="30">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <Button
+            Content="Gérer les salariés"
+            Height="40"
+            Margin="0,0,0,15"
+            Click="OuvrirSalaries"
+            Grid.Row="0"/>
+
+
+        <Button
+            Content="Gérer les sites"
+            Height="40"
+            Margin="0,0,0,15"
+            Click="OuvrirSites"
+            Grid.Row="1"/>
+
+
+        <Button
+            Content="Gérer les services"
+            Height="40"
+            Margin="0,0,0,15"
+            Click="OuvrirServices"
+            Grid.Row="2"/>
+
+
+        <Button
+            Content="Fermer"
+            Height="40"
+            Click="Fermer"
+            Grid.Row="3"/>
+
+
+    </Grid>
+
+</Window>

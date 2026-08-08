@@ -50,8 +50,8 @@ namespace DataGeneration
             // Salariés 
             //----------
             // Via l'API RandomUser
-            // On demande 500 personnes et on génèrera nous même l'adresse mail (car via l'API toutes sont en prenom.nom@exemple.com: pas réaliste)
-            var url = "https://randomuser.me/api/?results=500&nat=fr&inc=name,phone,cell";
+            // On demande 100000 personnes et on génèrera nous même l'adresse mail (car via l'API toutes sont en prenom.nom@exemple.com: pas réaliste)
+            var url = "https://randomuser.me/api/?results=100000&nat=fr&inc=name,phone,cell";
 
             // Appel API
             var client = new HttpClient();

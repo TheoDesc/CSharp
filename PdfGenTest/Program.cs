@@ -1,26 +1,34 @@
 ﻿using PdfGen;
 
-namespace PdfGenTest
+
+string dossier =
+    @"C:\Users\theod\source\repos\Annuaire\pdf";
+
+
+// Création du dossier si absent
+if (!Directory.Exists(dossier))
 {
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            string chemin = @"C:\Users\theod\source\repos\Annuaire\PdfGenTest\FicheSalarie.pdf";
-
-            PdfService.GenererPdf(
-                chemin,
-                "Dupont",
-                "Jean",
-                "01 02 03 04 05",
-                "06 01 02 03 04",
-                "jean.dupont@test.fr",
-                "Informatique",
-                "Paris");
-
-            Console.WriteLine("PDF créé avec succès !");
-            Console.WriteLine(chemin);
-            Console.ReadKey();
-        }
-    }
+    Directory.CreateDirectory(dossier);
 }
+
+
+string chemin =
+    dossier + @"\test.pdf";
+
+
+
+PdfService.GenererPdf(
+    chemin,
+    "Dupont",
+    "Jean",
+    "0102030405",
+    "0607080910",
+    "jean.dupont@test.fr",
+    "Informatique",
+    "Paris"
+);
+
+
+
+Console.WriteLine("PDF créé :");
+Console.WriteLine(chemin);

@@ -1,6 +1,5 @@
 ﻿namespace Data
 {
-    // Cette classe représente un salarié.
     public class Salarie
     {
         public int Id { get; set; }
@@ -18,11 +17,5 @@
         public int ServiceId { get; set; }
 
         public int SiteId { get; set; }
-
-
-        // Affichage WPF
-        public string Service { get; set; }
-
-        public string Site { get; set; }
     }
 }

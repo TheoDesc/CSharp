@@ -1,0 +1,159 @@
+﻿<Window x:Class="WPF.Windows.SalarieWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gestion des salariés"
+        Height="600"
+        Width="900"
+        WindowStartupLocation="CenterScreen">
+
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+
+        <!-- FORMULAIRE -->
+
+        <StackPanel Grid.Row="0">
+
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Nom"
+                           Width="100"/>
+
+                <TextBox x:Name="txtNom"
+                         Width="200"/>
+
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Prénom"
+                           Width="100"/>
+
+                <TextBox x:Name="txtPrenom"
+                         Width="200"/>
+
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Téléphone"
+                           Width="100"/>
+
+                <TextBox x:Name="txtTel"
+                         Width="200"/>
+
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Portable"
+                           Width="100"/>
+
+                <TextBox x:Name="txtPortable"
+                         Width="200"/>
+
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Email"
+                           Width="100"/>
+
+                <TextBox x:Name="txtEmail"
+                         Width="200"/>
+
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Service"
+                           Width="100"/>
+
+                <ComboBox x:Name="cbService"
+                          Width="200"/>
+
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Site"
+                           Width="100"/>
+
+                <ComboBox x:Name="cbSite"
+                          Width="200"/>
+
+            </StackPanel>
+
+
+        </StackPanel>
+
+
+
+
+        <!-- TABLEAU -->
+
+        <DataGrid x:Name="dgSalaries"
+          Grid.Row="1"
+          Margin="0,20,0,20"
+          AutoGenerateColumns="False"
+          SelectionChanged="SelectionChange">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" />
+                <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" />
+                <DataGridTextColumn Header="Tél. fixe" Binding="{Binding TelFixe}" />
+                <DataGridTextColumn Header="Portable" Binding="{Binding TelPortable}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                <DataGridTextColumn Header="Service" Binding="{Binding Service.Nom}" />
+                <DataGridTextColumn Header="Site" Binding="{Binding Site.Ville}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+
+
+        <!-- BOUTONS -->
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+
+
+            <Button Content="Ajouter"
+                    Width="120"
+                    Margin="10"
+                    Click="Ajouter"/>
+
+
+            <Button Content="Modifier"
+                    Width="120"
+                    Margin="10"
+                    Click="Modifier"/>
+
+
+            <Button Content="Supprimer"
+                    Width="120"
+                    Margin="10"
+                    Click="Supprimer"/>
+
+
+        </StackPanel>
+
+
+    </Grid>
+
+</Window>

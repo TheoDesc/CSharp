@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Data;
-using WPF.Windows;
+using DataEF;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace WPF
 {
+
     public partial class MainWindow : Window
     {
-        // Garde la liste complète des salariés
-        private List<Salarie> tousLesSalaries;
+
+        private AnnuaireContext ctx;
+
 
 
         public MainWindow()
@@ -18,85 +20,97 @@ namespace WPF
             InitializeComponent();
 
 
-            // Chemin de la base SQLite
-            DB.NomFichierSQLite = @"C:\Users\theod\source\repos\Annuaire\annuaire.db";
+
+            var options =
+                new DbContextOptionsBuilder<AnnuaireContext>()
+                .UseSqlite(
+                    "Data Source=annuaire.db")
+                .Options;
 
 
-            // Chargement des données au démarrage
+
+            ctx = new AnnuaireContext(options);
+
+
+
             ChargerSites();
+
             ChargerServices();
-            ChargerSalaries();
 
 
-            // Bouton rechercher
-            btnRechercher.Click += Rechercher;
+
         }
 
 
 
+
+
         // =========================
-        // CHARGER LES SITES
+        // SITES
         // =========================
 
         private void ChargerSites()
         {
-            var sites = DB.SiteLireTous();
+
+            var sites =
+                DbEF.SiteLireTous(ctx);
 
 
-            // Ajoute une option sans filtre
-            sites.Insert(0, new Site
-            {
-                Ville = "Tous"
-            });
+            sites.Insert(
+                0,
+                new Site
+                {
+                    Id = 0,
+                    Ville = "Tous"
+                });
 
 
             cbSite.ItemsSource = sites;
 
             cbSite.DisplayMemberPath = "Ville";
 
+            cbSite.SelectedValuePath = "Id";
+
             cbSite.SelectedIndex = 0;
+
         }
 
 
 
+
+
         // =========================
-        // CHARGER LES SERVICES
+        // SERVICES
         // =========================
 
         private void ChargerServices()
         {
-            var services = DB.ServiceLireTous();
+
+            var services =
+                DbEF.ServiceLireTous(ctx);
 
 
-            // Ajoute une option sans filtre
-            services.Insert(0, new Service
-            {
-                Nom = "Tous"
-            });
+
+            services.Insert(
+                0,
+                new Service
+                {
+                    Id = 0,
+                    Nom = "Tous"
+                });
 
 
             cbService.ItemsSource = services;
 
             cbService.DisplayMemberPath = "Nom";
 
+            cbService.SelectedValuePath = "Id";
+
             cbService.SelectedIndex = 0;
+
         }
 
 
-
-        // =========================
-        // CHARGER LES SALARIES
-        // =========================
-
-        private void ChargerSalaries()
-        {
-            // Récupère les salariés depuis la base
-            tousLesSalaries = DB.SalarieLireTous();
-
-
-            // Affiche dans le tableau
-            dgSalaries.ItemsSource = tousLesSalaries;
-        }
 
 
 
@@ -104,81 +118,134 @@ namespace WPF
         // RECHERCHE
         // =========================
 
-        private void Rechercher(object sender, RoutedEventArgs e)
+        private void Rechercher(
+            object sender,
+            RoutedEventArgs e)
         {
-            var resultat = tousLesSalaries;
 
 
-            // Filtre par nom ou prénom
-            if (txtRecherche.Text != "")
+            int? siteId = null;
+
+            int? serviceId = null;
+
+
+
+            if (cbSite.SelectedValue != null &&
+               (int)cbSite.SelectedValue != 0)
             {
-                string recherche = txtRecherche.Text.ToLower();
-
-
-                resultat = resultat
-                    .Where(s =>
-                        s.Nom.ToLower().Contains(recherche)
-                        ||
-                        s.Prenom.ToLower().Contains(recherche))
-                    .ToList();
+                siteId =
+                    (int)cbSite.SelectedValue;
             }
 
 
 
-            // Filtre par site
-            if (cbSite.SelectedIndex > 0)
+            if (cbService.SelectedValue != null &&
+               (int)cbService.SelectedValue != 0)
             {
-                Site site = cbSite.SelectedItem as Site;
-
-
-                resultat = resultat
-                    .Where(s => s.Site == site.Ville)
-                    .ToList();
+                serviceId =
+                    (int)cbService.SelectedValue;
             }
 
 
 
-            // Filtre par service
-            if (cbService.SelectedIndex > 0)
+            var salaries =
+                DbEF.RechercherSalaries(
+                    ctx,
+                    txtRecherche.Text,
+                    siteId,
+                    serviceId
+                );
+
+
+
+            dgSalaries.ItemsSource =
+                salaries;
+
+
+
+            if (salaries.Count == 0)
             {
-                Service service = cbService.SelectedItem as Service;
-
-
-                resultat = resultat
-                    .Where(s => s.Service == service.Nom)
-                    .ToList();
+                MessageBox.Show(
+                    "Aucun salarié trouvé");
             }
 
-
-            // Affiche les résultats
-            dgSalaries.ItemsSource = resultat;
         }
 
 
 
+
+
         // =========================
-        // OUVRIR LA FICHE SALARIE
+        // FICHE SALARIE
         // =========================
 
-        private void dgSalaries_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OuvrirFiche(
+            object sender,
+            MouseButtonEventArgs e)
         {
-            // Récupère la ligne sélectionnée
-            Salarie salarie = dgSalaries.SelectedItem as Salarie;
+
+            Salarie salarie =
+                dgSalaries.SelectedItem as Salarie;
 
 
-            // Vérifie qu'un salarié est sélectionné
             if (salarie != null)
             {
-                // Ouvre la fenêtre fiche salarié
-                FicheSalarieWindow fiche = new FicheSalarieWindow(salarie);
+
+                Windows.FicheSalarieWindow fiche =
+                    new Windows.FicheSalarieWindow(
+                        //salarie.Id
+                        salarie
+                     );
+
 
                 fiche.Show();
+
             }
+
         }
 
-        private void dgSalaries_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+
+
+
+
+        // =========================
+        // ADMIN
+        // =========================
+
+        private void OuvrirAdmin(
+            object sender,
+            RoutedEventArgs e)
         {
 
+            Windows.LoginWindow login =
+                new Windows.LoginWindow();
+
+
+            if (login.ShowDialog() == true)
+            {
+
+                Windows.AdministrationWindow win =
+                    new Windows.AdministrationWindow();
+
+
+                win.Show();
+
+            }
+
         }
+
+
+
+        protected override void OnClosed(
+            System.EventArgs e)
+        {
+
+            ctx.Dispose();
+
+            base.OnClosed(e);
+
+        }
+
     }
+
 }
