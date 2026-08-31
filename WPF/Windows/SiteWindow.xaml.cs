@@ -1,32 +1,34 @@
 ﻿using System;
 using System.Windows;
-using DataEF;
-using Microsoft.EntityFrameworkCore;
+using Data;
 
 namespace WPF.Windows
 {
     public partial class SiteWindow : Window
     {
-        private AnnuaireContext ctx;
         private int idSelectionne = 0;
 
         public SiteWindow()
         {
             InitializeComponent();
 
-            var options =
-                new DbContextOptionsBuilder<AnnuaireContext>()
-                .UseSqlite("Data Source=annuaire.db")
-                .Options;
-
-            ctx = new AnnuaireContext(options);
-
             ChargerSites();
         }
 
         private void ChargerSites()
         {
-            dgSites.ItemsSource = DbEF.SiteLireTous(ctx);
+            try
+            {
+                dgSites.ItemsSource = DB.SiteLireTous();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Impossible de charger les sites",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         private void Ajouter(object sender, RoutedEventArgs e)
@@ -46,7 +48,7 @@ namespace WPF.Windows
 
             try
             {
-                DbEF.SiteAjouter(ctx, ville);
+                DB.SiteAjouter(ville);
 
                 ChargerSites();
 
@@ -62,8 +64,8 @@ namespace WPF.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Impossible d'ajouter le site.\n\n" + ex.Message,
-                    "Erreur",
+                    ex.Message,
+                    "Impossible d'ajouter le site",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
@@ -97,8 +99,7 @@ namespace WPF.Windows
 
             try
             {
-                DbEF.SiteModifier(
-                    ctx,
+                DB.SiteModifier(
                     idSelectionne,
                     ville);
 
@@ -113,8 +114,8 @@ namespace WPF.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Impossible de modifier le site.\n\n" + ex.Message,
-                    "Erreur",
+                    ex.Message,
+                    "Impossible de modifier le site",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
@@ -144,9 +145,7 @@ namespace WPF.Windows
 
             try
             {
-                DbEF.SiteSupprimer(
-                    ctx,
-                    idSelectionne);
+                DB.SiteSupprimer(idSelectionne);
 
                 ChargerSites();
 
@@ -175,8 +174,8 @@ namespace WPF.Windows
             object sender,
             System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            Site site =
-                dgSites.SelectedItem as Site;
+            Data.Site site =
+                dgSites.SelectedItem as Data.Site;
 
             if (site == null)
                 return;
@@ -184,13 +183,6 @@ namespace WPF.Windows
             idSelectionne = site.Id;
 
             txtVille.Text = site.Ville;
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            ctx.Dispose();
-
-            base.OnClosed(e);
         }
     }
 }

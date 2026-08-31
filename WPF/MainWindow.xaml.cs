@@ -19,26 +19,22 @@ namespace WPF
         {
             InitializeComponent();
 
+            string NomFichierSQLite = @"C:\Users\theod\source\repos\CSharp\annuaire.db";
 
+            // initialisation Data
+            Data.DB.NomFichierSQLite = NomFichierSQLite;
 
             var options =
                 new DbContextOptionsBuilder<AnnuaireContext>()
                 .UseSqlite(
-                    "Data Source=annuaire.db")
+                    "Data Source=" + NomFichierSQLite)
                 .Options;
 
-
-
             ctx = new AnnuaireContext(options);
-
-
 
             ChargerSites();
 
             ChargerServices();
-
-
-
         }
 
 

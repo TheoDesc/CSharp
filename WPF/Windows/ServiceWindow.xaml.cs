@@ -1,33 +1,35 @@
 ﻿using System;
 using System.Windows;
-using DataEF;
-using Microsoft.EntityFrameworkCore;
+using Data;
 
 namespace WPF.Windows
 {
     public partial class ServiceWindow : Window
     {
-        private AnnuaireContext ctx;
         private int idSelectionne = 0;
 
         public ServiceWindow()
         {
             InitializeComponent();
 
-            var options =
-                new DbContextOptionsBuilder<AnnuaireContext>()
-                .UseSqlite("Data Source=annuaire.db")
-                .Options;
-
-            ctx = new AnnuaireContext(options);
-
             ChargerServices();
         }
 
         private void ChargerServices()
         {
-            dgServices.ItemsSource =
-                DbEF.ServiceLireTous(ctx);
+            try
+            {
+                dgServices.ItemsSource =
+                    DB.ServiceLireTous();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Impossible de charger les services",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         private void Ajouter(
@@ -49,9 +51,7 @@ namespace WPF.Windows
 
             try
             {
-                DbEF.ServiceAjouter(
-                    ctx,
-                    nom);
+                DB.ServiceAjouter(nom);
 
                 ChargerServices();
 
@@ -67,9 +67,8 @@ namespace WPF.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Impossible d'ajouter le service.\n\n" +
                     ex.Message,
-                    "Erreur",
+                    "Impossible d'ajouter le service",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
@@ -105,8 +104,7 @@ namespace WPF.Windows
 
             try
             {
-                DbEF.ServiceModifier(
-                    ctx,
+                DB.ServiceModifier(
                     idSelectionne,
                     nom);
 
@@ -121,9 +119,8 @@ namespace WPF.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Impossible de modifier le service.\n\n" +
                     ex.Message,
-                    "Erreur",
+                    "Impossible de modifier le service",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
@@ -155,9 +152,7 @@ namespace WPF.Windows
 
             try
             {
-                DbEF.ServiceSupprimer(
-                    ctx,
-                    idSelectionne);
+                DB.ServiceSupprimer(idSelectionne);
 
                 ChargerServices();
 
@@ -186,8 +181,8 @@ namespace WPF.Windows
             object sender,
             System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            Service service =
-                dgServices.SelectedItem as Service;
+            Data.Service service =
+                dgServices.SelectedItem as Data.Service;
 
             if (service == null)
                 return;
@@ -195,13 +190,6 @@ namespace WPF.Windows
             idSelectionne = service.Id;
 
             txtNom.Text = service.Nom;
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            ctx.Dispose();
-
-            base.OnClosed(e);
         }
     }
 }
