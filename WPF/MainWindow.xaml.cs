@@ -19,6 +19,8 @@ namespace WPF
         {
             InitializeComponent();
 
+            KeyDown += MainWindow_KeyDown;
+
             string NomFichierSQLite = @"C:\Users\theod\source\repos\CSharp\annuaire.db";
 
             // initialisation Data
@@ -230,9 +232,18 @@ namespace WPF
 
         }
 
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.A &&
+                Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            {
+                OuvrirAdmin(null, null);
+            }
+        }
 
 
-        protected override void OnClosed(
+
+        protected override void OnClosed(   
             System.EventArgs e)
         {
 
