@@ -2,7 +2,7 @@
 
 
 string dossier =
-    @"C:\Users\theod\source\repos\Annuaire\pdf";
+    @"C:\Users\theod\source\repos\CSharp\pdf";
 
 
 // Création du dossier si absent

@@ -226,7 +226,11 @@ namespace WPF
                     new Windows.AdministrationWindow();
 
 
-                win.Show();
+                win.ShowDialog();
+
+                ChargerSites();
+                ChargerServices();
+                Rechercher(null, null);
 
             }
 

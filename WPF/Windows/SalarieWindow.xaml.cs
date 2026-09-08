@@ -19,7 +19,7 @@ namespace WPF.Windows
 
             var options =
                 new DbContextOptionsBuilder<AnnuaireContext>()
-                .UseSqlite("Data Source=annuaire.db")
+                .UseSqlite("Data Source=C:\\Users\\theod\\source\\repos\\CSharp\\annuaire.db")
                 .Options;
 
             ctx = new AnnuaireContext(options);

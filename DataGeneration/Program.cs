@@ -30,7 +30,7 @@ namespace DataGeneration
              * On suppose que l'on part d'une base vide
              */
 
-            DB.NomFichierSQLite = @"C:\Users\theod\source\repos\Annuaire\annuaire.db";
+            DB.NomFichierSQLite = @"C:\Users\theod\source\repos\CSharp\annuaire.db";
             DB.CreerBase();
 
             // Sites
